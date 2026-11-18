@@ -1,0 +1,2443 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="tool">
+  <meta name="design-style" content="bauhaus">
+  <title>Arena Usaha &amp; Energi — Fisika Kelas XI (7 Regu)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@100..900&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (Bauhaus) */
+      --background: #f5f0e8;
+      --surface-container-low: #f2ede5;
+      --surface-container: #eee9e0;
+      --surface-container-high: #e8e3da;
+
+      /* Ink */
+      --on-surface: #1a1a1a;
+      --on-surface-variant: #4a4a4a;
+
+      /* Lines */
+      --outline: #1a1a1a;
+      --outline-variant: #d0cbc3;
+
+      /* Accents */
+      --primary: #1a1a1a;
+      --on-primary: #ffffff;
+      --primary-container: #ffcc00;
+      --on-primary-container: #1a1a1a;
+      --secondary: #e63b2e;
+      --tertiary: #0055ff;
+      --on-tertiary: #ffffff;
+      --error: #cc0000;
+      --on-error: #ffffff;
+      --error-container: #fde2e2;
+
+      /* Semantic tokens */
+      --positive: #0f7637;
+      --on-positive: #ffffff;
+      --positive-container: #dcf5e5;
+      --warning: #8f4f00;
+      --warning-container: #fff0cc;
+
+      /* Data series */
+      --data-1: #e63b2e;
+      --data-2: #0055ff;
+      --data-3: #1a1a1a;
+      --data-4: #9a7300;
+      --data-context: #b5afa5;
+
+      /* Focus ring */
+      --focus: #0055ff;
+
+      /* Fonts */
+      --font-headline: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-label: 'Space Grotesk', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+
+      /* Shape */
+      --rounded: 0.125rem;
+      --rounded-lg: 0.25rem;
+      --rounded-full: 0.75rem;
+
+      /* Style effects */
+      --border-thick: 3px solid var(--outline);
+      --border-medium: 2px solid var(--outline);
+      --offset-shadow: 5px 5px 0 var(--outline);
+      --offset-shadow-sm: 3px 3px 0 var(--outline);
+      --rule-heavy: 6px solid var(--outline);
+
+      /* Type scale (optimized for high-contrast Infokus & mobile legibility) */
+      --display-size: clamp(2rem, 1.45rem + 2.1vw, 3.25rem);
+      --headline-size: clamp(1.375rem, 1.15rem + 0.8vw, 1.875rem);
+      --subhead-size: clamp(1.125rem, 1rem + 0.35vw, 1.375rem);
+      --body-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+      --label-size: 0.8125rem;
+
+      /* Spacing scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 6rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: inherit;
+    }
+
+    .page-grid {
+      display: grid;
+      gap: var(--space-lg);
+      padding: var(--space-lg);
+      max-width: 1360px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Focus rings */
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Typography helpers */
+    h1, h2, h3, h4 {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      color: var(--on-surface);
+      margin: 0;
+    }
+
+    .kicker {
+      display: inline-block;
+      font-family: var(--font-label);
+      font-weight: 700;
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background-color: var(--primary);
+      color: var(--on-primary);
+      padding: var(--space-xs) var(--space-sm);
+    }
+    .kicker--yellow {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      border: var(--border-medium);
+    }
+    .kicker--blue {
+      background-color: var(--tertiary);
+      color: var(--on-tertiary);
+    }
+
+    /* Bauhaus Header */
+    .top-header {
+      border-top: var(--space-sm) solid var(--tertiary);
+      border-bottom: var(--rule-heavy);
+      padding-top: var(--space-md);
+      padding-bottom: var(--space-lg);
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: end;
+    }
+    .title-display {
+      font-size: var(--display-size);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-top: var(--space-sm);
+    }
+    .title-display mark {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      padding-inline: var(--space-xs);
+      box-decoration-break: clone;
+    }
+    .subtitle-lede {
+      margin: var(--space-sm) 0 0 0;
+      color: var(--on-surface-variant);
+      max-width: 60ch;
+      font-weight: 500;
+    }
+
+    .header-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: var(--space-sm);
+    }
+    .sync-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .sync-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-family: var(--font-mono);
+      font-size: var(--label-size);
+      font-weight: 700;
+      padding: var(--space-xs) var(--space-sm);
+      border: var(--border-medium);
+      background-color: var(--positive-container);
+      color: var(--positive);
+    }
+    .role-switcher {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    /* Bauhaus Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      min-height: 46px;
+      padding: var(--space-sm) var(--space-md);
+      font-family: var(--font-label);
+      font-weight: 700;
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border: var(--border-thick);
+      border-radius: var(--rounded);
+      box-shadow: var(--offset-shadow-sm);
+      cursor: pointer;
+      transition: transform var(--dur-micro) var(--ease-out),
+                  box-shadow var(--dur-micro) var(--ease-out),
+                  background-color var(--dur-micro) var(--ease-out),
+                  color var(--dur-micro) var(--ease-out);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+    }
+    .btn:hover:not(:disabled) {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      transform: translate(-1px, -1px);
+      box-shadow: var(--offset-shadow);
+    }
+    .btn:active:not(:disabled) {
+      transform: translate(3px, 3px);
+      box-shadow: none;
+    }
+    .btn:disabled {
+      opacity: 0.48;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    .btn--primary {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .btn--blue {
+      background-color: var(--tertiary);
+      color: var(--on-tertiary);
+    }
+    .btn--positive {
+      background-color: var(--positive);
+      color: var(--on-positive);
+    }
+    .btn--danger {
+      background-color: var(--error);
+      color: var(--on-error);
+    }
+    .btn--active-role {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+
+    /* Blocks & Panels */
+    .block {
+      border: var(--border-thick);
+      border-radius: var(--rounded);
+      box-shadow: var(--offset-shadow);
+      background-color: var(--surface-container-low);
+      padding: var(--space-lg);
+    }
+    .block--paper {
+      background-color: var(--background);
+    }
+    .block--yellow {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .block--blue {
+      background-color: var(--tertiary);
+      color: var(--on-tertiary);
+    }
+
+    .section-open {
+      border-top: var(--space-sm) solid var(--tertiary);
+      padding-top: var(--space-md);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: var(--space-md);
+    }
+    .section-open--red {
+      border-top-color: var(--secondary);
+    }
+    .section-open--yellow {
+      border-top-color: var(--primary-container);
+    }
+    .section-title {
+      font-size: var(--headline-size);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-top: var(--space-xs);
+    }
+
+    /* Form Controls */
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .field-label {
+      font-family: var(--font-label);
+      font-weight: 700;
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--on-surface);
+    }
+    .field-input {
+      min-height: 46px;
+      padding: var(--space-sm) var(--space-md);
+      background-color: var(--background);
+      color: var(--on-surface);
+      border: var(--border-thick);
+      border-radius: var(--rounded);
+      font-weight: 600;
+    }
+    .field-input:focus {
+      border-color: var(--tertiary);
+    }
+    .field-row-end {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      align-items: flex-end;
+    }
+    .inline-feedback {
+      font-weight: 700;
+      font-size: var(--label-size);
+      padding: var(--space-xs) var(--space-sm);
+      border-left: 4px solid var(--primary);
+      background-color: var(--surface-container);
+      margin-top: var(--space-xs);
+    }
+    .inline-feedback--error {
+      border-left-color: var(--error);
+      background-color: var(--error-container);
+      color: var(--error);
+    }
+    .inline-feedback--ok {
+      border-left-color: var(--positive);
+      background-color: var(--positive-container);
+      color: var(--positive);
+    }
+
+    /* Anti-cheat alert banner */
+    .cheat-banner {
+      border: var(--border-thick);
+      border-left-width: 10px;
+      border-left-color: var(--secondary);
+      background-color: var(--error-container);
+      color: var(--on-surface);
+      padding: var(--space-md) var(--space-lg);
+      box-shadow: var(--offset-shadow);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-md);
+      align-items: center;
+    }
+    .cheat-banner__title {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--subhead-size);
+      color: var(--error);
+    }
+
+    /* Operator Dashboard Layout */
+    .op-grid-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .status-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .kpi-tile {
+      border: var(--border-thick);
+      background-color: var(--background);
+      padding: var(--space-md);
+      box-shadow: var(--offset-shadow-sm);
+    }
+    .kpi-tile__label {
+      font-family: var(--font-label);
+      font-weight: 700;
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--on-surface-variant);
+    }
+    .kpi-tile__val {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem);
+      font-variant-numeric: tabular-nums;
+      line-height: 1.05;
+      margin-top: var(--space-xs);
+    }
+
+    /* 7 Teams Leaderboard Grid */
+    .teams-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+    .team-card {
+      border: var(--border-thick);
+      box-shadow: var(--offset-shadow);
+      background-color: var(--surface-container-low);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      cursor: pointer;
+      text-align: left;
+      transition: transform var(--dur-micro) var(--ease-out),
+                  box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .team-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 7px 7px 0 var(--outline);
+    }
+    .team-card--selected {
+      background-color: var(--primary-container);
+    }
+    .team-card--leader {
+      border-top: 8px solid var(--tertiary);
+    }
+    .team-card__head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .team-card__name {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--subhead-size);
+    }
+    .team-card__score {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: clamp(2rem, 1.6rem + 1.4vw, 2.75rem);
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+    .team-bar-track {
+      height: 12px;
+      border: var(--border-medium);
+      background-color: var(--background);
+      width: 100%;
+    }
+    .team-bar-fill {
+      height: 100%;
+      background-color: var(--tertiary);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+    .team-members-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .member-chip {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      padding: 2px 6px;
+      border: var(--border-medium);
+      background-color: var(--background);
+    }
+    .member-chip--flagged {
+      background-color: var(--error-container);
+      color: var(--error);
+    }
+
+    /* Member Progress Matrix */
+    .matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+    .matrix-team-box {
+      border: var(--border-thick);
+      background-color: var(--background);
+      box-shadow: var(--offset-shadow-sm);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .matrix-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-sm);
+      padding: var(--space-sm);
+      border: var(--border-medium);
+      background-color: var(--surface-container-low);
+      align-items: center;
+    }
+    .matrix-q-dots {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 3px;
+      margin-top: var(--space-xs);
+    }
+    .q-cell {
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      border: 1.5px solid var(--outline);
+      background-color: var(--background);
+      color: var(--on-surface-variant);
+    }
+    .q-cell--ok {
+      background-color: var(--positive);
+      color: var(--on-positive);
+    }
+    .q-cell--wrong {
+      background-color: var(--error-container);
+      color: var(--error);
+    }
+    .q-cell--curr {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+
+    /* Student View */
+    .student-shell {
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      gap: var(--space-lg);
+    }
+    .team-pick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .team-pick-btn {
+      border: var(--border-thick);
+      background-color: var(--background);
+      padding: var(--space-md);
+      text-align: left;
+      cursor: pointer;
+      box-shadow: var(--offset-shadow-sm);
+      min-height: 82px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-xs);
+    }
+    .team-pick-btn:hover:not(:disabled) {
+      transform: translate(-1px, -1px);
+      box-shadow: var(--offset-shadow);
+    }
+    .team-pick-btn--selected {
+      background-color: var(--primary-container);
+    }
+    .team-pick-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Question Card + Diagram */
+    .question-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .diagram-frame {
+      border: var(--border-thick);
+      background-color: var(--background);
+      padding: var(--space-sm);
+      box-shadow: var(--offset-shadow-sm);
+    }
+    .diagram-frame svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .options-list {
+      display: grid;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+    .option-btn {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: var(--space-md);
+      align-items: center;
+      text-align: left;
+      min-height: 54px;
+      padding: var(--space-sm) var(--space-md);
+      border: var(--border-thick);
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-weight: 600;
+      font-size: var(--body-size);
+      cursor: pointer;
+      box-shadow: var(--offset-shadow-sm);
+      transition: transform var(--dur-micro) var(--ease-out),
+                  background-color var(--dur-micro) var(--ease-out);
+    }
+    .option-btn:hover:not(:disabled) {
+      background-color: var(--primary-container);
+      transform: translate(-1px, -1px);
+    }
+    .option-btn--chosen {
+      background-color: var(--tertiary);
+      color: var(--on-tertiary);
+    }
+    .option-key {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border: var(--border-medium);
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+      font-family: var(--font-headline);
+      font-weight: 700;
+    }
+
+    /* Tables */
+    .data-table-wrap {
+      overflow-x: auto;
+      border: var(--border-thick);
+      background-color: var(--background);
+    }
+    table.bauhaus-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+    table.bauhaus-table th {
+      background-color: var(--surface-container-high);
+      font-family: var(--font-label);
+      font-weight: 700;
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      text-align: left;
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: 3px solid var(--outline);
+    }
+    table.bauhaus-table td {
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: 1px solid var(--outline-variant);
+      vertical-align: top;
+    }
+    .num-col { text-align: right; font-family: var(--font-mono); font-weight: 700; }
+
+    /* Solution Cards */
+    .solution-list {
+      display: grid;
+      gap: var(--space-lg);
+    }
+    .solution-card {
+      border: var(--border-thick);
+      background-color: var(--background);
+      box-shadow: var(--offset-shadow-sm);
+      padding: var(--space-lg);
+    }
+    .formula-box {
+      border-left: 5px solid var(--tertiary);
+      background-color: var(--surface-container-low);
+      padding: var(--space-md);
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      margin-top: var(--space-sm);
+      white-space: pre-line;
+    }
+
+    .tag {
+      display: inline-block;
+      font-family: var(--font-label);
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 2px 8px;
+      border: var(--border-medium);
+      background-color: var(--background);
+    }
+    .tag--mudah { background-color: var(--positive-container); color: var(--positive); }
+    .tag--sulit { background-color: var(--primary-container); color: var(--on-primary-container); }
+    .tag--hots { background-color: var(--tertiary); color: var(--on-tertiary); }
+
+    .hidden { display: none !important; }
+
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+      .top-header { grid-template-columns: 1fr; align-items: start; }
+      .header-controls { align-items: flex-start; }
+      .sync-pill-row { justify-content: flex-start; }
+      .op-grid-top { grid-template-columns: 1fr; }
+      .question-layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .page-grid { padding: var(--space-sm); gap: var(--space-md); }
+      .block { padding: var(--space-md); }
+      .cheat-banner { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-grid">
+    <!-- HEADER -->
+    <header class="top-header">
+      <div>
+        <span class="kicker">Fisika Kelas XI &middot; Usaha &amp; Energi</span>
+        <h1 class="title-display">Arena Kompetisi <mark>7 Regu</mark></h1>
+        <p class="subtitle-lede">
+          Usaha, Usaha Pegas, Energi Kinetik, Energi Potensial, Energi Mekanik, Daya &amp; Efisiensi Daya &mdash;
+          1 tautan untuk Siswa (HP) &amp; Operator (Infokus).
+        </p>
+      </div>
+      <div class="header-controls">
+        <div class="sync-pill-row">
+          <span class="sync-badge" id="sync-status-badge">SINKRONISASI REAL-TIME SIAP</span>
+          <button type="button" class="btn" id="btn-test-sound" onclick="testAudioAlert()">Uji Alarm</button>
+        </div>
+        <div class="role-switcher" role="group" aria-label="Pilih Peran Tampilan">
+          <button type="button" class="btn btn--active-role" id="btn-role-student" onclick="switchRole('student')">
+            Perangkat Siswa (HP)
+          </button>
+          <button type="button" class="btn" id="btn-role-operator" onclick="switchRole('operator')">
+            Layar Operator (Infokus)
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- LIVE ANTI-CHEAT ALERT BANNER -->
+    <section id="global-cheat-banner" class="cheat-banner hidden" aria-live="assertive">
+      <div>
+        <div class="cheat-banner__title" id="cheat-banner-title">PERINGATAN ANTI-CURANG (-5 POIN)</div>
+        <div id="cheat-banner-desc">Siswa terdeteksi keluar tab atau browser.</div>
+      </div>
+      <button type="button" class="btn" onclick="dismissGlobalBanner()">Tutup Notifikasi</button>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- OPERATOR / INFOKUS VIEW                                   -->
+    <!-- ========================================================= -->
+    <main id="view-operator" class="hidden" aria-label="Layar Operator Infokus">
+      <div style="display: grid; gap: var(--space-xl);">
+
+        <!-- Section 1: Kontrol Operator & Status Permainan -->
+        <section>
+          <div class="section-open">
+            <div>
+              <span class="kicker kicker--blue">Kontrol Ruang Operator</span>
+              <h2 class="section-title">Status Permainan &amp; Gerbang Kode Akses</h2>
+            </div>
+            <div class="tag" id="op-phase-tag">MENUNGGU OPERATOR</div>
+          </div>
+
+          <div class="op-grid-top" style="margin-top: var(--space-md);">
+            <!-- Left: KPI Summary -->
+            <div class="status-strip">
+              <div class="kpi-tile">
+                <div class="kpi-tile__label">Total Siswa Bergabung</div>
+                <div class="kpi-tile__val" id="kpi-students">0 / 42</div>
+              </div>
+              <div class="kpi-tile">
+                <div class="kpi-tile__label">Regu Aktif</div>
+                <div class="kpi-tile__val" id="kpi-teams">0 / 7</div>
+              </div>
+              <div class="kpi-tile">
+                <div class="kpi-tile__label">Soal Terjawab</div>
+                <div class="kpi-tile__val" id="kpi-answered">0</div>
+              </div>
+              <div class="kpi-tile">
+                <div class="kpi-tile__label">Penalti Anti-Curang</div>
+                <div class="kpi-tile__val" id="kpi-violations">0</div>
+              </div>
+            </div>
+
+            <!-- Right: Code Gate to Start Game -->
+            <div class="block block--paper">
+              <div class="field-row-end">
+                <div class="field-group" style="flex: 1 1 200px;">
+                  <label class="field-label" for="op-start-code">Kode Akses Operator (Mulai / Kelola)</label>
+                  <input type="password" id="op-start-code" class="field-input" autocomplete="off">
+                </div>
+                <button type="button" class="btn btn--primary" id="btn-op-unlock-start" onclick="operatorStartOrVerify()">
+                  Verifikasi &amp; Mulai
+                </button>
+              </div>
+              <div id="op-start-feedback" class="inline-feedback" style="margin-top: var(--space-sm);">
+                Masukkan kode akses Operator untuk memulai permainan bagi seluruh 7 regu.
+              </div>
+
+              <!-- Unlocked Game Controls -->
+              <div id="op-live-controls" class="hidden" style="margin-top: var(--space-md); display: flex; flex-wrap: wrap; gap: var(--space-sm);">
+                <button type="button" class="btn btn--positive" id="btn-op-start-game" onclick="setGameStatus('running')">
+                  Mulai Permainan Sekarang
+                </button>
+                <button type="button" class="btn btn--blue" id="btn-op-finish-game" onclick="setGameStatus('finished')">
+                  Selesaikan Sesi
+                </button>
+                <button type="button" class="btn" id="btn-op-demo-fill" onclick="simulateClassroomJoin()">
+                  + Simulasi Siswa Gabung
+                </button>
+                <button type="button" class="btn" id="btn-op-demo-answer" onclick="simulateClassroomActivity()">
+                  Simulasi Aktivitas Jawab
+                </button>
+                <button type="button" class="btn btn--danger" id="btn-op-reset" onclick="handleOperatorReset(this)">
+                  Reset Semua Data
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2: Papan Skor Live 7 Regu -->
+        <section>
+          <div class="section-open section-open--yellow">
+            <div>
+              <span class="kicker kicker--yellow">Papan Skor Proyektor</span>
+              <h2 class="section-title">Klasemen Langsung 7 Regu (5&ndash;6 Siswa/Regu)</h2>
+            </div>
+            <button type="button" class="btn" id="btn-clear-team-filter" onclick="selectTeamFilter(0)">
+              Tampilkan Semua Regu
+            </button>
+          </div>
+          <div class="teams-grid" id="op-teams-grid" style="margin-top: var(--space-md);"></div>
+        </section>
+
+        <!-- Section 3: Matriks Progres Anggota Saling Mendukung -->
+        <section>
+          <div class="section-open">
+            <div>
+              <span class="kicker">Matriks Progres Anggota</span>
+              <h2 class="section-title">Dukungan &amp; Capaian Individu di Dalam Regu</h2>
+            </div>
+            <div style="font-size: var(--label-size); font-weight: 700; color: var(--on-surface-variant);">
+              Hijau = Benar &middot; Merah = Salah &middot; Kuning = Sedang Dikerjakan &middot; Putih = Belum
+            </div>
+          </div>
+          <div class="matrix-grid" id="op-matrix-grid" style="margin-top: var(--space-md);"></div>
+        </section>
+
+        <!-- Section 4: Pembahasan, Rekap Skor & Kunci Jawaban (TERKUNCI KODE FISIKAXI) -->
+        <section>
+          <div class="section-open section-open--red">
+            <div>
+              <span class="kicker">Khusus Guru &amp; Operator</span>
+              <h2 class="section-title">Rekap Skor, Log Anti-Curang &amp; Pembahasan Lengkap</h2>
+            </div>
+          </div>
+
+          <!-- Locked Gate -->
+          <div id="op-solutions-locked" class="block block--paper" style="margin-top: var(--space-md);">
+            <h3 style="font-size: var(--subhead-size);">Konten Pembahasan &amp; Rekap Terkunci</h3>
+            <p style="margin: var(--space-xs) 0 var(--space-md) 0; color: var(--on-surface-variant);">
+              Rekap skor akhir, catatan pelanggaran tab/browser, kunci jawaban, serta pembahasan rumus lengkap hanya dapat dibuka oleh Operator dengan kode akses.
+            </p>
+            <div class="field-row-end">
+              <div class="field-group" style="flex: 0 1 280px;">
+                <label class="field-label" for="op-solution-code">Kode Akses Pembahasan &amp; Rekap</label>
+                <input type="password" id="op-solution-code" class="field-input" autocomplete="off">
+              </div>
+              <button type="button" class="btn btn--primary" onclick="unlockSolutionsPanel()">
+                Buka Rekap &amp; Pembahasan
+              </button>
+            </div>
+            <div id="op-solution-feedback" class="inline-feedback hidden"></div>
+          </div>
+
+          <!-- Unlocked Content -->
+          <div id="op-solutions-unlocked" class="hidden" style="margin-top: var(--space-md); display: grid; gap: var(--space-xl);">
+            <div class="block block--yellow" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-md);">
+              <div>
+                <strong>Akses Operator Terbuka:</strong> Rekap skor, log pelanggaran, dan 10 pembahasan lengkap siap ditampilkan di Infokus.
+              </div>
+              <div style="display: flex; flex-wrap: wrap; gap: var(--space-sm);">
+                <button type="button" class="btn" onclick="exportScoreCsv()">Ekspor Rekap CSV</button>
+                <button type="button" class="btn" onclick="lockSolutionsPanel()">Kunci Kembali</button>
+              </div>
+            </div>
+
+            <!-- Rekap Skor Akhir -->
+            <div>
+              <h3 style="font-size: var(--subhead-size); margin-bottom: var(--space-sm);">1. Rekap Skor Akhir 7 Regu</h3>
+              <div class="data-table-wrap">
+                <table class="bauhaus-table">
+                  <thead>
+                    <tr>
+                      <th>Peringkat</th>
+                      <th>Regu</th>
+                      <th class="num-col">Anggota</th>
+                      <th class="num-col">Soal Benar</th>
+                      <th class="num-col">Poin Soal</th>
+                      <th class="num-col">Penalti (-5)</th>
+                      <th class="num-col">Skor Akhir</th>
+                    </tr>
+                  </thead>
+                  <tbody id="op-recap-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Log Anti-Curang -->
+            <div>
+              <h3 style="font-size: var(--subhead-size); margin-bottom: var(--space-sm);">2. Log Deteksi Anti-Curang (Berpindah Tab / Keluar Browser)</h3>
+              <div class="data-table-wrap">
+                <table class="bauhaus-table">
+                  <thead>
+                    <tr>
+                      <th>Waktu</th>
+                      <th>Nama Siswa</th>
+                      <th>Regu</th>
+                      <th>Kejadian</th>
+                      <th class="num-col">Dampak Skor</th>
+                    </tr>
+                  </thead>
+                  <tbody id="op-violations-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Pembahasan 10 Soal -->
+            <div>
+              <h3 style="font-size: var(--subhead-size); margin-bottom: var(--space-sm);">3. Kunci Jawaban &amp; Pembahasan Lengkap (10 Soal)</h3>
+              <div class="solution-list" id="op-solutions-list"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- ========================================================= -->
+    <!-- STUDENT / MOBILE VIEW                                     -->
+    <!-- ========================================================= -->
+    <main id="view-student" class="student-shell" aria-label="Tampilan Siswa">
+
+      <!-- Anti-Cheat Local Blocking Overlay -->
+      <section id="student-cheat-overlay" class="block hidden" style="border-color: var(--error); background-color: var(--error-container);">
+        <span class="kicker" style="background-color: var(--error);">Pelanggaran Terdeteksi</span>
+        <h2 class="section-title" style="color: var(--error); margin-top: var(--space-sm);">
+          Anda Terdeteksi Berpindah Tab / Keluar Browser!
+        </h2>
+        <p style="font-weight: 600;">
+          Alarm peringatan telah berbunyi dan skor regu Anda dikurangi <strong>&minus;5 poin</strong> secara otomatis.
+          Tetap berada di halaman soal ini selama permainan berlangsung.
+        </p>
+        <button type="button" class="btn btn--danger" onclick="acknowledgeStudentCheat()">
+          Saya Mengerti &amp; Kembali ke Soal
+        </button>
+      </section>
+
+      <!-- Step 1: Join Form -->
+      <section id="student-join-panel" class="block block--paper">
+        <span class="kicker kicker--yellow">Langkah 1 &middot; Pendaftaran Regu</span>
+        <h2 class="section-title" style="margin-top: var(--space-sm);">Masuk ke Regu Anda</h2>
+        <p style="color: var(--on-surface-variant); margin: var(--space-xs) 0 var(--space-lg) 0;">
+          Masukkan nama lengkap lalu pilih Regu 1&ndash;7 (maksimal 6 siswa per regu). Nama Anda langsung tampil di layar Infokus Operator secara real-time.
+        </p>
+
+        <div style="display: grid; gap: var(--space-lg);">
+          <div class="field-group">
+            <label class="field-label" for="student-name-input">Nama Lengkap Siswa</label>
+            <input type="text" id="student-name-input" class="field-input" maxlength="32" autocomplete="name">
+          </div>
+
+          <div>
+            <div class="field-label" style="margin-bottom: var(--space-sm);">Pilih Regu (Regu 1 &ndash; Regu 7)</div>
+            <div class="team-pick-grid" id="student-team-picker"></div>
+          </div>
+
+          <div id="student-join-feedback" class="inline-feedback hidden"></div>
+
+          <div>
+            <button type="button" class="btn btn--primary" style="width: 100%; min-height: 54px;" onclick="studentJoinTeam()">
+              Gabung ke Regu &amp; Tampil di Infokus
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step 2: Lobby Waiting Room -->
+      <section id="student-lobby-panel" class="block block--paper hidden">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-sm);">
+          <span class="kicker kicker--blue" id="lobby-team-badge">REGU 1</span>
+          <button type="button" class="btn" onclick="studentLeaveTeam()">Ganti Nama / Regu</button>
+        </div>
+
+        <h2 class="section-title" style="margin-top: var(--space-md);" id="lobby-greeting">Halo, Siswa!</h2>
+        <div class="block block--yellow" style="margin-top: var(--space-md); box-shadow: var(--offset-shadow-sm);">
+          <strong>Menunggu Operator Memulai Permainan</strong>
+          <p style="margin: var(--space-xs) 0 0 0;">
+            Nama Anda sudah muncul di layar Infokus guru. Permainan akan otomatis terbuka begitu Operator memasukkan kode akses dan menekan tombol Mulai.
+          </p>
+        </div>
+
+        <div style="margin-top: var(--space-lg);">
+          <div class="field-label" style="margin-bottom: var(--space-sm);">Anggota Regu Anda Saat Ini (5&ndash;6 Siswa):</div>
+          <div class="team-members-chips" id="lobby-teammates-list"></div>
+        </div>
+
+        <div class="inline-feedback inline-feedback--error" style="margin-top: var(--space-lg);">
+          Aturan Anti-Curang Aktif saat Game Dimulai: Jangan pindah tab atau keluar dari browser! Setiap perpindahan tab otomatis membunyikan alarm dan mengurangi skor regu sebesar &minus;5 poin.
+        </div>
+      </section>
+
+      <!-- Step 3: Active Quiz Panel -->
+      <section id="student-quiz-panel" class="hidden" style="display: grid; gap: var(--space-lg);">
+        <!-- Student & Team Top Bar -->
+        <div class="block block--yellow" style="padding: var(--space-md); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-md);">
+          <div>
+            <div class="field-label" id="quiz-student-meta">SISWA &middot; REGU 1</div>
+            <div style="font-family: var(--font-headline); font-weight: 700; font-size: var(--subhead-size);" id="quiz-team-score-live">
+              Skor Regu: 0 poin
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div class="field-label">Progres Anda</div>
+            <div style="font-family: var(--font-mono); font-weight: 700; font-size: var(--subhead-size);" id="quiz-progress-label">
+              Soal 1 / 10
+            </div>
+          </div>
+        </div>
+
+        <!-- Teammate mutual support strip -->
+        <div class="block block--paper" style="padding: var(--space-md);">
+          <div class="field-label" style="margin-bottom: var(--space-xs);">Progres Anggota Seregu (Saling Mendukung)</div>
+          <div id="quiz-teammates-progress" style="display: grid; gap: var(--space-xs);"></div>
+        </div>
+
+        <!-- Active Question Box -->
+        <div class="block block--paper" id="quiz-question-card">
+          <div style="display: flex; flex-wrap: wrap; gap: var(--space-sm); align-items: center; margin-bottom: var(--space-sm);">
+            <span class="tag" id="q-level-tag">MUDAH (+10 POIN)</span>
+            <span class="tag" id="q-topic-tag">USAHA</span>
+          </div>
+
+          <div class="question-layout">
+            <div>
+              <h3 style="font-size: var(--subhead-size); line-height: 1.35;" id="q-prompt-text">Memuat soal...</h3>
+              <div class="options-list" id="q-options-list"></div>
+              <div id="q-submit-feedback" class="inline-feedback hidden" style="margin-top: var(--space-md);"></div>
+            </div>
+            <div class="diagram-frame" id="q-diagram-box" aria-label="Diagram Fisika Soal"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step 4: Student Finished Panel -->
+      <section id="student-done-panel" class="block block--paper hidden">
+        <span class="kicker" style="background-color: var(--positive);">Selesai Mengerjakan</span>
+        <h2 class="section-title" style="margin-top: var(--space-sm);">Semua 10 Soal Telah Anda Selesaikan!</h2>
+        <p id="done-summary-text" style="font-weight: 600; margin: var(--space-sm) 0 var(--space-lg) 0;"></p>
+
+        <div class="block" style="box-shadow: var(--offset-shadow-sm); margin-bottom: var(--space-lg);">
+          <div class="field-label" style="margin-bottom: var(--space-sm);">Progres Anggota Regu Anda</div>
+          <div id="done-teammates-progress" style="display: grid; gap: var(--space-xs);"></div>
+        </div>
+
+        <div class="inline-feedback">
+          Rekap skor resmi dan pembahasan lengkap soal tersedia di layar Infokus Operator setelah sesi dibuka dengan kode akses guru.
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <api-shim></api-shim>
+  <script>
+      'use strict';
+
+      var OPERATOR_CODE = 'FISIKAXI';
+      var MAX_MEMBERS_PER_TEAM = 6;
+      var PENALTY_POINTS = 5;
+      var CHANNEL_NAME = 'fisika_xi_usaha_energi_sync_v1';
+
+      var TEAM_DEFS = [
+        { id: 1, name: `Regu 1`, subtitle: `Tim Joule` },
+        { id: 2, name: `Regu 2`, subtitle: `Tim Watt` },
+        { id: 3, name: `Regu 3`, subtitle: `Tim Newton` },
+        { id: 4, name: `Regu 4`, subtitle: `Tim Hooke` },
+        { id: 5, name: `Regu 5`, subtitle: `Tim Kinetik` },
+        { id: 6, name: `Regu 6`, subtitle: `Tim Potensial` },
+        { id: 7, name: `Regu 7`, subtitle: `Tim Mekanik` }
+      ];
+
+      var QUESTIONS = [
+        {
+          id: 1,
+          level: `Mudah`,
+          points: 10,
+          topic: `Usaha`,
+          prompt: `Sebuah peti bermassa 10 kg ditarik dengan gaya mendatar konstan F = 40 N ke kanan sehingga berpindah sejauh s = 5 m pada lantai licin. Berapakah usaha yang dilakukan gaya F tersebut?`,
+          options: [`120 J`, `200 J`, `250 J`, `400 J`],
+          correct: 1,
+          formula: `Diketahui: F = 40 N, s = 5 m, sudut theta = 0 derajat (cos 0 = 1)\nRumus: W = F * s\nPenyelesaian: W = 40 N * 5 m = 200 Joule`,
+          svg: `<svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram balok ditarik gaya mendatar 40 N sejauh 5 m">
+            <rect x="0" y="0" width="360" height="200" fill="var(--background)"/>
+            <line x1="20" y1="145" x2="340" y2="145" stroke="var(--outline)" stroke-width="3"/>
+            <rect x="50" y="90" width="70" height="55" fill="var(--primary-container)" stroke="var(--outline)" stroke-width="3"/>
+            <text x="85" y="123" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="16" fill="var(--on-surface)">10 kg</text>
+            <rect x="220" y="90" width="70" height="55" fill="none" stroke="var(--outline-variant)" stroke-width="2.5" stroke-dasharray="6 4"/>
+            <line x1="120" y1="118" x2="210" y2="118" stroke="var(--tertiary)" stroke-width="4"/>
+            <polygon points="210,111 224,118 210,125" fill="var(--tertiary)"/>
+            <text x="165" y="106" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="15" fill="var(--tertiary)">F = 40 N</text>
+            <line x1="85" y1="168" x2="255" y2="168" stroke="var(--outline)" stroke-width="2"/>
+            <line x1="85" y1="160" x2="85" y2="176" stroke="var(--outline)" stroke-width="2"/>
+            <line x1="255" y1="160" x2="255" y2="176" stroke="var(--outline)" stroke-width="2"/>
+            <text x="170" y="188" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="14" fill="var(--on-surface)">s = 5 m (lantai licin)</text>
+          </svg>`
+        },
+        {
+          id: 2,
+          level: `Mudah`,
+          points: 10,
+          topic: `Energi Potensial`,
+          prompt: `Buah kelapa bermassa 2 kg menggantung pada ketinggian h = 15 m di atas permukaan tanah. Jika percepatan gravitasi g = 10 m/s^2, berapakah energi potensial gravitasi kelapa tersebut?`,
+          options: [`150 J`, `200 J`, `300 J`, `450 J`],
+          correct: 2,
+          formula: `Diketahui: m = 2 kg, h = 15 m, g = 10 m/s^2\nRumus: Ep = m * g * h\nPenyelesaian: Ep = 2 * 10 * 15 = 300 Joule`,
+          svg: `<svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram benda bermassa 2 kg pada ketinggian 15 m">
+            <rect x="0" y="0" width="360" height="200" fill="var(--background)"/>
+            <line x1="25" y1="170" x2="335" y2="170" stroke="var(--outline)" stroke-width="4"/>
+            <rect x="90" y="40" width="18" height="130" fill="var(--surface-container-high)" stroke="var(--outline)" stroke-width="2.5"/>
+            <circle cx="132" cy="50" r="18" fill="var(--primary-container)" stroke="var(--outline)" stroke-width="3"/>
+            <text x="132" y="55" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="12" fill="var(--on-surface)">2 kg</text>
+            <line x1="132" y1="68" x2="132" y2="98" stroke="var(--secondary)" stroke-width="3"/>
+            <polygon points="126,95 132,107 138,95" fill="var(--secondary)"/>
+            <text x="150" y="92" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="13" fill="var(--on-surface)">g = 10 m/s^2</text>
+            <line x1="230" y1="50" x2="230" y2="170" stroke="var(--tertiary)" stroke-width="2.5" stroke-dasharray="5 4"/>
+            <line x1="220" y1="50" x2="240" y2="50" stroke="var(--tertiary)" stroke-width="2.5"/>
+            <text x="248" y="116" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="16" fill="var(--tertiary)">h = 15 m</text>
+          </svg>`
+        },
+        {
+          id: 3,
+          level: `Mudah`,
+          points: 10,
+          topic: `Energi Kinetik`,
+          prompt: `Sebuah benda bermassa 4 kg meluncur lurus di lintasan datar dengan kelajuan tetap v = 6 m/s. Berapakah energi kinetik yang dimiliki benda tersebut?`,
+          options: [`24 J`, `48 J`, `72 J`, `144 J`],
+          correct: 2,
+          formula: `Diketahui: m = 4 kg, v = 6 m/s\nRumus: Ek = 1/2 * m * v^2\nPenyelesaian: Ek = 1/2 * 4 * (6^2) = 2 * 36 = 72 Joule`,
+          svg: `<svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram mobil bergerak dengan kecepatan 6 m/s dan massa 4 kg">
+            <rect x="0" y="0" width="360" height="200" fill="var(--background)"/>
+            <line x1="20" y1="150" x2="340" y2="150" stroke="var(--outline)" stroke-width="3"/>
+            <rect x="75" y="88" width="96" height="44" fill="var(--tertiary)" stroke="var(--outline)" stroke-width="3"/>
+            <circle cx="98" cy="138" r="12" fill="var(--primary-container)" stroke="var(--outline)" stroke-width="3"/>
+            <circle cx="148" cy="138" r="12" fill="var(--primary-container)" stroke="var(--outline)" stroke-width="3"/>
+            <text x="123" y="116" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="15" fill="var(--on-tertiary)">m = 4 kg</text>
+            <line x1="185" y1="108" x2="285" y2="108" stroke="var(--secondary)" stroke-width="4"/>
+            <polygon points="282,100 298,108 282,116" fill="var(--secondary)"/>
+            <text x="238" y="92" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="16" fill="var(--on-surface)">v = 6 m/s</text>
+            <line x1="35" y1="102" x2="64" y2="102" stroke="var(--outline)" stroke-width="2.5"/>
+            <line x1="45" y1="116" x2="64" y2="116" stroke="var(--outline)" stroke-width="2.5"/>
+          </svg>`
+        },
+        {
+          id: 4,
+          level: `Sulit`,
+          points: 15,
+          topic: `Usaha (Sudut & Gesekan)`,
+          prompt: `Sebuah koper ditarik gaya F = 50 N yang membentuk sudut 37 derajat terhadap lantai mendatar (cos 37 = 0,8). Jika terdapat gaya gesek konstan fk = 10 N dan koper berpindah sejauh s = 8 m, berapakah usaha total pada koper?`,
+          options: [`160 J`, `240 J`, `320 J`, `400 J`],
+          correct: 1,
+          formula: `Diketahui: F = 50 N, cos 37 = 0,8, fk = 10 N, s = 8 m\nGaya tarik searah perpindahan: Fx = F * cos 37 = 50 * 0,8 = 40 N\nResultan gaya mendatar: Ftotal = Fx - fk = 40 - 10 = 30 N\nUsaha total: W = Ftotal * s = 30 * 8 = 240 Joule`,
+          svg: `<svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram gaya miring 50 N sudut 37 derajat dan gaya gesek 10 N">
+            <rect x="0" y="0" width="360" height="200" fill="var(--background)"/>
+            <line x1="20" y1="150" x2="340" y2="150" stroke="var(--outline)" stroke-width="3"/>
+            <rect x="115" y="95" width="76" height="55" fill="var(--primary-container)" stroke="var(--outline)" stroke-width="3"/>
+            <line x1="191" y1="118" x2="290" y2="118" stroke="var(--outline-variant)" stroke-width="2" stroke-dasharray="5 4"/>
+            <line x1="191" y1="118" x2="270" y2="58" stroke="var(--tertiary)" stroke-width="4"/>
+            <polygon points="262,55 278,52 271,67" fill="var(--tertiary)"/>
+            <text x="276" y="46" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="14" fill="var(--tertiary)">F = 50 N</text>
+            <text x="228" y="109" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="13" fill="var(--on-surface)">37 deg</text>
+            <line x1="115" y1="145" x2="46" y2="145" stroke="var(--secondary)" stroke-width="3.5"/>
+            <polygon points="50,139 36,145 50,151" fill="var(--secondary)"/>
+            <text x="68" y="132" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--on-surface)">fk = 10 N</text>
+            <text x="180" y="180" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="14" fill="var(--on-surface)">Perpindahan s = 8 m (cos 37 = 0,8)</text>
+          </svg>`
+        },
+        {
+          id: 5,
+          level: `Sulit`,
+          points: 15,
+          topic: `Usaha Pegas`,
+          prompt: `Sebuah pegas berkonstanta k = 400 N/m mula-mula sudah teregang sejauh dx1 = 0,1 m dari panjang normalnya, lalu ditarik lagi hingga teregang dx2 = 0,3 m. Berapakah usaha yang dibutuhkan untuk meregangkan pegas dari dx1 ke dx2?`,
+          options: [`8 J`, `12 J`, `16 J`, `18 J`],
+          correct: 2,
+          formula: `Diketahui: k = 400 N/m, dx1 = 0,1 m, dx2 = 0,3 m\nRumus: W = 1/2 * k * (dx2^2 - dx1^2)\nPenyelesaian: W = 1/2 * 400 * (0,09 - 0,01) = 200 * 0,08 = 16 Joule`,
+          svg: `<svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram pegas k 400 N/m teregang dari 0,1 m ke 0,3 m">
+            <rect x="0" y="0" width="360" height="200" fill="var(--background)"/>
+            <rect x="24" y="28" width="14" height="144" fill="var(--primary)"/>
+            <text x="180" y="34" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="14" fill="var(--tertiary)">k = 400 N/m</text>
+            <polyline points="38,68 62,68 72,54 84,82 96,54 108,82 120,54 132,82 142,68 168,68" fill="none" stroke="var(--outline)" stroke-width="3"/>
+            <rect x="168" y="50" width="30" height="36" fill="var(--surface-container-high)" stroke="var(--outline)" stroke-width="2.5"/>
+            <text x="212" y="72" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="13" fill="var(--on-surface)">dx1 = 0,1 m</text>
+            <polyline points="38,136 68,136 82,120 98,152 114,120 130,152 146,120 162,152 178,120 194,152 210,136 242,136" fill="none" stroke="var(--tertiary)" stroke-width="3"/>
+            <rect x="242" y="118" width="30" height="36" fill="var(--primary-container)" stroke="var(--outline)" stroke-width="2.5"/>
+            <text x="282" y="140" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="13" fill="var(--on-surface)">dx2 = 0,3 m</text>
+          </svg>`
+        },
+        {
+          id: 6,
+          level: `Sulit`,
+          points: 15,
+          topic: `Energi Kinetik & Grafik F-s`,
+          prompt: `Benda bermassa 2 kg mula-mula diam (v0 = 0). Benda dikenai gaya F yang berubah terhadap jarak s sesuai grafik trapesium: F konstan 18 N dari s = 0 sampai s = 6 m, lalu turun linear menjadi 0 N pada s = 10 m. Berapakah kelajuan benda saat s = 10 m?`,
+          options: [`8 m/s`, `10 m/s`, `12 m/s`, `14 m/s`],
+          correct: 2,
+          formula: `Usaha W = Luas grafik F-s (trapesium)\nW = ((6 + 10) / 2) * 18 = 8 * 18 = 144 Joule\nTeorema Usaha-Energi Kinetik: W = Ek2 - Ek1 = 1/2 * m * v^2 - 0\n144 = 1/2 * 2 * v^2 => v^2 = 144 => v = 12 m/s`,
+          svg: `<svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Grafik F terhadap s berbentuk trapesium">
+            <rect x="0" y="0" width="360" height="200" fill="var(--background)"/>
+            <polygon points="60,155 60,55 204,55 300,155" fill="var(--primary-container)" stroke="var(--tertiary)" stroke-width="3"/>
+            <line x1="60" y1="25" x2="60" y2="160" stroke="var(--outline)" stroke-width="3"/>
+            <line x1="55" y1="155" x2="335" y2="155" stroke="var(--outline)" stroke-width="3"/>
+            <line x1="204" y1="55" x2="204" y2="155" stroke="var(--outline)" stroke-width="1.5" stroke-dasharray="4 4"/>
+            <text x="48" y="60" text-anchor="end" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="13" fill="var(--on-surface)">18</text>
+            <text x="36" y="28" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--on-surface)">F (N)</text>
+            <text x="60" y="176" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="13" fill="var(--on-surface)">0</text>
+            <text x="204" y="176" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="13" fill="var(--on-surface)">6</text>
+            <text x="300" y="176" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="13" fill="var(--on-surface)">10</text>
+            <text x="330" y="176" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--on-surface)">s (m)</text>
+            <text x="148" y="112" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--on-surface)">m = 2 kg, v0 = 0</text>
+          </svg>`
+        },
+        {
+          id: 7,
+          level: `Sulit`,
+          points: 15,
+          topic: `Daya`,
+          prompt: `Sebuah pompa air mengangkat air bermassa 300 kg dari dasar sumur menuju tangki setinggi h = 12 m dalam waktu 1 menit (60 detik). Jika g = 10 m/s^2, berapakah daya minimal yang dikerjakan pompa?`,
+          options: [`300 Watt`, `450 Watt`, `600 Watt`, `720 Watt`],
+          correct: 2,
+          formula: `Diketahui: m = 300 kg, h = 12 m, t = 60 s, g = 10 m/s^2\nUsaha angkat: W = m * g * h = 300 * 10 * 12 = 36.000 Joule\nDaya: P = W / t = 36.000 / 60 = 600 Watt`,
+          svg: `<svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram pompa mengangkat 300 kg air setinggi 12 m dalam 60 detik">
+            <rect x="0" y="0" width="360" height="200" fill="var(--background)"/>
+            <rect x="44" y="132" width="76" height="46" fill="var(--tertiary)" stroke="var(--outline)" stroke-width="3"/>
+            <text x="82" y="160" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--on-tertiary)">Pompa</text>
+            <rect x="220" y="34" width="96" height="54" fill="var(--primary-container)" stroke="var(--outline)" stroke-width="3"/>
+            <text x="268" y="58" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--on-surface)">Tangki</text>
+            <text x="268" y="76" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="12" fill="var(--on-surface)">300 kg</text>
+            <polyline points="82,132 82,60 220,60" fill="none" stroke="var(--outline)" stroke-width="5"/>
+            <line x1="168" y1="60" x2="168" y2="155" stroke="var(--secondary)" stroke-width="2.5" stroke-dasharray="5 3"/>
+            <text x="176" y="112" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="14" fill="var(--on-surface)">h = 12 m</text>
+            <text x="176" y="132" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="13" fill="var(--tertiary)">t = 60 s</text>
+          </svg>`
+        },
+        {
+          id: 8,
+          level: `HOTS`,
+          points: 25,
+          topic: `Energi Mekanik & Pegas`,
+          prompt: `Balok bermassa 2 kg dilepaskan tanpa kecepatan awal dari puncak bidang miring licin setinggi h = 4 m (g = 10 m/s^2). Di dasar lintasan datar yang licin terdapat pegas dengan konstanta k = 1.000 N/m. Berapakah pemendekan maksimum pegas saat menghentikan balok?`,
+          options: [`0,2 m`, `0,4 m`, `0,5 m`, `0,8 m`],
+          correct: 1,
+          formula: `Hukum Kekekalan Energi Mekanik (lintasan licin):\nEp gravitasi di puncak = Ep pegas saat tertekan maksimum\nm * g * h = 1/2 * k * x^2\n2 * 10 * 4 = 1/2 * 1.000 * x^2\n80 = 500 * x^2 => x^2 = 0,16 => x = 0,4 m (40 cm)`,
+          svg: `<svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram balok meluncur dari ketinggian 4 m menumbuk pegas k 1000 N/m">
+            <rect x="0" y="0" width="360" height="200" fill="var(--background)"/>
+            <polyline points="35,44 155,156 325,156" fill="none" stroke="var(--outline)" stroke-width="3.5"/>
+            <rect x="40" y="24" width="28" height="22" transform="rotate(42 54 35)" fill="var(--primary-container)" stroke="var(--outline)" stroke-width="2.5"/>
+            <text x="90" y="42" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--on-surface)">2 kg (v0=0)</text>
+            <line x1="35" y1="44" x2="35" y2="156" stroke="var(--tertiary)" stroke-width="2" stroke-dasharray="4 4"/>
+            <text x="42" y="114" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="13" fill="var(--tertiary)">h = 4 m</text>
+            <polyline points="235,142 245,142 252,130 262,154 272,130 282,154 292,130 302,154 310,142 325,142" fill="none" stroke="var(--secondary)" stroke-width="3"/>
+            <rect x="325" y="115" width="12" height="44" fill="var(--primary)"/>
+            <text x="275" y="118" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="13" fill="var(--on-surface)">k = 1.000 N/m</text>
+          </svg>`
+        },
+        {
+          id: 9,
+          level: `HOTS`,
+          points: 25,
+          topic: `Energi Mekanik & Bidang Kasar`,
+          prompt: `Kotak bermassa 4 kg meluncur dari keadaan diam di titik A menuruni lintasan seperempat lingkaran licin berjari-jari R = 5 m (g = 10 m/s^2). Di dasar B, kotak masuk ke lantai datar kasar (koefisien gesek uk = 0,4) dan berhenti di C. Berapakah jarak tempuh BC?`,
+          options: [`8,0 m`, `10,0 m`, `12,5 m`, `15,0 m`],
+          correct: 2,
+          formula: `Energi mekanik di A: EmA = m * g * R = 4 * 10 * 5 = 200 Joule\nDi lantai kasar BC, seluruh energi habis oleh usaha gaya gesek:\nWgesek = fk * s = (uk * m * g) * s = EmA\n(0,4 * 4 * 10) * s = 200 => 16 * s = 200 => s = 12,5 meter`,
+          svg: `<svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram lintasan seperempat lingkaran licin R 5 m lalu lantai datar kasar">
+            <rect x="0" y="0" width="360" height="200" fill="var(--background)"/>
+            <path d="M 48 45 A 105 105 0 0 0 153 150 L 330 150" fill="none" stroke="var(--outline)" stroke-width="3.5"/>
+            <rect x="52" y="38" width="22" height="22" fill="var(--primary-container)" stroke="var(--outline)" stroke-width="2.5"/>
+            <text x="34" y="34" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="14" fill="var(--on-surface)">A</text>
+            <text x="150" y="172" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="14" fill="var(--on-surface)">B</text>
+            <text x="310" y="172" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="14" fill="var(--on-surface)">C</text>
+            <line x1="48" y1="45" x2="153" y2="45" stroke="var(--tertiary)" stroke-width="2" stroke-dasharray="4 4"/>
+            <line x1="153" y1="45" x2="153" y2="150" stroke="var(--tertiary)" stroke-width="2" stroke-dasharray="4 4"/>
+            <text x="106" y="76" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="13" fill="var(--tertiary)">R = 5 m (licin)</text>
+            <line x1="153" y1="154" x2="330" y2="154" stroke="var(--secondary)" stroke-width="4" stroke-dasharray="6 4"/>
+            <text x="242" y="136" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="13" fill="var(--on-surface)">Kasar uk = 0,4</text>
+          </svg>`
+        },
+        {
+          id: 10,
+          level: `HOTS`,
+          points: 25,
+          topic: `Daya & Efisiensi Daya`,
+          prompt: `Air terjun dengan debit Q = 200 liter/detik (massa jenis air 1 kg/liter) jatuh dari ketinggian h = 20 m memutar turbin generator PLTA (g = 10 m/s^2). Jika efisiensi sistem generator adalah 75%, berapakah daya listrik keluaran (Pout) yang dihasilkan?`,
+          options: [`20 kW`, `25 kW`, `30 kW`, `40 kW`],
+          correct: 2,
+          formula: `Debit 200 liter/s => massa per detik (m/t) = 200 kg/s\nDaya masukan air (Pin) = (m/t) * g * h = 200 * 10 * 20 = 40.000 W = 40 kW\nEfisiensi = 75% => Daya keluaran: Pout = 75% * 40 kW = 30 kW`,
+          svg: `<svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram PLTA air terjun h 20 m debit 200 L/s dan efisiensi 75 persen">
+            <rect x="0" y="0" width="360" height="200" fill="var(--background)"/>
+            <rect x="24" y="34" width="84" height="32" fill="var(--tertiary)" stroke="var(--outline)" stroke-width="2.5"/>
+            <path d="M 108 44 Q 146 44 146 130" fill="none" stroke="var(--tertiary)" stroke-width="10"/>
+            <circle cx="146" cy="145" r="24" fill="var(--primary-container)" stroke="var(--outline)" stroke-width="3"/>
+            <text x="146" y="150" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="11" fill="var(--on-surface)">Turbin</text>
+            <line x1="170" y1="145" x2="225" y2="145" stroke="var(--outline)" stroke-width="4"/>
+            <rect x="225" y="118" width="108" height="54" fill="var(--surface-container-high)" stroke="var(--outline)" stroke-width="3"/>
+            <text x="279" y="141" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="var(--on-surface)">Generator</text>
+            <text x="279" y="160" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="13" fill="var(--tertiary)">Efisiensi = 75%</text>
+            <text x="66" y="55" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="11" fill="var(--on-tertiary)">Q = 200 L/s</text>
+            <line x1="205" y1="44" x2="205" y2="128" stroke="var(--secondary)" stroke-width="2.5" stroke-dasharray="4 4"/>
+            <text x="215" y="88" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="14" fill="var(--on-surface)">h = 20 m</text>
+          </svg>`
+        }
+      ];
+
+      // Local device/session UI state (not shared)
+      var uiState = {
+        role: 'student',          // 'student' | 'operator'
+        myStudentId: null,
+        selectedTeamPick: 0,
+        operatorStartUnlocked: false,
+        solutionsUnlocked: false,
+        teamFilter: 0,
+        cheatOverlayVisible: false,
+        lastCheatTs: 0,
+        dismissedBannerId: null
+      };
+
+      // Shared classroom game state (synchronized across devices/tabs)
+      var gameState = createInitialGameState();
+      var channel = null;
+      var audioCtx = null;
+      var pollTimer = null;
+
+      function createInitialGameState() {
+        return {
+          version: 1,
+          updatedAt: Date.now(),
+          status: 'lobby', // 'lobby' | 'running' | 'finished'
+          students: {},    // id -> { id, name, teamId, joinedAt, currentQ, answers: { [qId]: { chosen, correct, points } }, violations: number }
+          teamPenalties: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 },
+          violationsLog: [],
+          lastAlert: null
+        };
+      }
+
+      // --- AUDIO SYNTHESIS (Web Audio API, no external files) ---
+      function ensureAudio() {
+        try {
+          var Ctx = window.AudioContext || window.webkitAudioContext;
+          if (!Ctx) return null;
+          if (!audioCtx) audioCtx = new Ctx();
+          if (audioCtx.state === 'suspended') audioCtx.resume();
+          return audioCtx;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function playCheatAlarm() {
+        var ctx = ensureAudio();
+        if (!ctx) return;
+        try {
+          var now = ctx.currentTime;
+          var freqs = [880, 620, 880, 620];
+          for (var i = 0; i < freqs.length; i++) {
+            var osc = ctx.createOscillator();
+            var gain = ctx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(freqs[i], now + i * 0.14);
+            gain.gain.setValueAtTime(0.18, now + i * 0.14);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.14 + 0.13);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now + i * 0.14);
+            osc.stop(now + i * 0.14 + 0.135);
+          }
+        } catch (e) {}
+      }
+
+      function testAudioAlert() {
+        ensureAudio();
+        playCheatAlarm();
+      }
+      window.testAudioAlert = testAudioAlert;
+
+      // --- REAL-TIME SYNC (BroadcastChannel + notebookAppApi) ---
+      function initSync() {
+        try {
+          if (typeof BroadcastChannel !== 'undefined') {
+            channel = new BroadcastChannel(CHANNEL_NAME);
+            channel.onmessage = function (ev) {
+              if (!ev || !ev.data) return;
+              if (ev.data.type === 'STATE_UPDATE' && ev.data.payload) {
+                mergeIncomingState(ev.data.payload);
+              } else if (ev.data.type === 'REQUEST_SYNC') {
+                channel.postMessage({ type: 'STATE_UPDATE', payload: gameState });
+              }
+            };
+            channel.postMessage({ type: 'REQUEST_SYNC' });
+          }
+        } catch (e) {}
+      }
+
+      function mergeIncomingState(incoming) {
+        if (!incoming || typeof incoming !== 'object') return;
+        var prevAlertId = gameState.lastAlert ? gameState.lastAlert.id : null;
+
+        // If incoming is newer or reset occurred
+        if (incoming.resetNonce && incoming.resetNonce !== gameState.resetNonce) {
+          gameState = incoming;
+          if (uiState.myStudentId && !gameState.students[uiState.myStudentId]) {
+            uiState.myStudentId = null;
+          }
+          renderAll();
+          return;
+        }
+
+        if ((incoming.updatedAt || 0) >= (gameState.updatedAt || 0)) {
+          gameState = incoming;
+          if (gameState.lastAlert && gameState.lastAlert.id !== prevAlertId) {
+            if (uiState.role === 'operator') {
+              playCheatAlarm();
+            }
+          }
+          renderAll();
+        }
+      }
+
+      async function loadPersistedState() {
+        try {
+          if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === 'function') {
+            var saved = await window.notebookAppApi.getAppState();
+            if (saved && saved.gameState) {
+              mergeIncomingState(saved.gameState);
+            }
+            if (saved && saved.localSession && saved.localSession.myStudentId) {
+              if (gameState.students[saved.localSession.myStudentId]) {
+                uiState.myStudentId = saved.localSession.myStudentId;
+              }
+            }
+          }
+        } catch (e) {}
+      }
+
+      async function persistAndBroadcast() {
+        gameState.updatedAt = Date.now();
+        try {
+          if (channel) {
+            channel.postMessage({ type: 'STATE_UPDATE', payload: gameState });
+          }
+        } catch (e) {}
+        try {
+          if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === 'function') {
+            await window.notebookAppApi.setAppState({
+              gameState: gameState,
+              localSession: {
+                myStudentId: uiState.myStudentId,
+                role: uiState.role
+              }
+            });
+          }
+        } catch (e) {}
+        renderAll();
+      }
+
+      // Periodic sync poll via notebookAppApi in case BroadcastChannel is unavailable across contexts
+      function startPollSync() {
+        if (pollTimer) clearInterval(pollTimer);
+        pollTimer = setInterval(async function () {
+          try {
+            if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === 'function') {
+              var remote = await window.notebookAppApi.getAppState();
+              if (remote && remote.gameState && (remote.gameState.updatedAt || 0) > (gameState.updatedAt || 0)) {
+                mergeIncomingState(remote.gameState);
+              }
+            }
+          } catch (e) {}
+        }, 1500);
+      }
+
+      // --- CALCULATIONS & HELPERS ---
+      function getTeamMembers(teamId) {
+        var list = [];
+        var ids = Object.keys(gameState.students);
+        for (var i = 0; i < ids.length; i++) {
+          var st = gameState.students[ids[i]];
+          if (st && st.teamId === teamId) {
+            list.push(st);
+          }
+        }
+        list.sort(function (a, b) { return (a.joinedAt || 0) - (b.joinedAt || 0); });
+        return list;
+      }
+
+      function getStudentStats(st) {
+        var answered = 0;
+        var correctCount = 0;
+        var earnedPoints = 0;
+        for (var i = 0; i < QUESTIONS.length; i++) {
+          var q = QUESTIONS[i];
+          var ans = st.answers && st.answers[q.id];
+          if (ans) {
+            answered++;
+            if (ans.correct) {
+              correctCount++;
+              earnedPoints += ans.points;
+            }
+          }
+        }
+        return {
+          answered: answered,
+          correctCount: correctCount,
+          earnedPoints: earnedPoints,
+          finished: answered >= QUESTIONS.length
+        };
+      }
+
+      function getTeamStats(teamId) {
+        var members = getTeamMembers(teamId);
+        var earned = 0;
+        var correctTotal = 0;
+        var answeredTotal = 0;
+        var memberViolations = 0;
+        for (var i = 0; i < members.length; i++) {
+          var stats = getStudentStats(members[i]);
+          earned += stats.earnedPoints;
+          correctTotal += stats.correctCount;
+          answeredTotal += stats.answered;
+          memberViolations += (members[i].violations || 0);
+        }
+        var penaltyPoints = (gameState.teamPenalties[teamId] || 0);
+        var totalScore = earned - penaltyPoints;
+        var maxPossibleAnswers = Math.max(1, members.length * QUESTIONS.length);
+        var progressPct = members.length === 0 ? 0 : Math.round((answeredTotal / maxPossibleAnswers) * 100);
+        return {
+          teamId: teamId,
+          members: members,
+          memberCount: members.length,
+          earnedPoints: earned,
+          penaltyPoints: penaltyPoints,
+          violationCount: memberViolations,
+          totalScore: totalScore,
+          correctTotal: correctTotal,
+          answeredTotal: answeredTotal,
+          progressPct: progressPct
+        };
+      }
+
+      function formatTime(ts) {
+        var d = new Date(ts);
+        var hh = String(d.getHours()).padStart(2, '0');
+        var mm = String(d.getMinutes()).padStart(2, '0');
+        var ss = String(d.getSeconds()).padStart(2, '0');
+        return hh + ':' + mm + ':' + ss;
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      // --- ROLE SWITCHER ---
+      function switchRole(nextRole) {
+        ensureAudio();
+        uiState.role = nextRole;
+        renderAll();
+      }
+      window.switchRole = switchRole;
+
+      // --- ANTI-CHEAT DETECTION ---
+      function triggerCheatPenalty(reason) {
+        if (uiState.role !== 'student') return;
+        if (gameState.status !== 'running') return;
+        if (!uiState.myStudentId || !gameState.students[uiState.myStudentId]) return;
+
+        var st = gameState.students[uiState.myStudentId];
+        var stats = getStudentStats(st);
+        if (stats.finished) return;
+
+        var now = Date.now();
+        if (now - uiState.lastCheatTs < 2000) return;
+        uiState.lastCheatTs = now;
+
+        st.violations = (st.violations || 0) + 1;
+        gameState.teamPenalties[st.teamId] = (gameState.teamPenalties[st.teamId] || 0) + PENALTY_POINTS;
+
+        var alertObj = {
+          id: 'al_' + now + '_' + Math.random().toString(36).slice(2, 6),
+          ts: now,
+          studentName: st.name,
+          teamId: st.teamId,
+          reason: reason,
+          penalty: PENALTY_POINTS
+        };
+        gameState.violationsLog.unshift(alertObj);
+        if (gameState.violationsLog.length > 60) {
+          gameState.violationsLog.length = 60;
+        }
+        gameState.lastAlert = alertObj;
+        uiState.cheatOverlayVisible = true;
+
+        playCheatAlarm();
+        persistAndBroadcast();
+      }
+
+      function setupAntiCheatListeners() {
+        document.addEventListener('visibilitychange', function () {
+          if (document.hidden) {
+            triggerCheatPenalty(`Berpindah tab atau meminimalkan browser`);
+          }
+        });
+        window.addEventListener('blur', function () {
+          triggerCheatPenalty(`Keluar dari jendela browser soal`);
+        });
+      }
+
+      function acknowledgeStudentCheat() {
+        ensureAudio();
+        uiState.cheatOverlayVisible = false;
+        renderStudentView();
+      }
+      window.acknowledgeStudentCheat = acknowledgeStudentCheat;
+
+      function dismissGlobalBanner() {
+        if (gameState.lastAlert) {
+          uiState.dismissedBannerId = gameState.lastAlert.id;
+        }
+        renderGlobalBanner();
+      }
+      window.dismissGlobalBanner = dismissGlobalBanner;
+
+      // --- STUDENT ACTIONS ---
+      function pickStudentTeam(teamId) {
+        ensureAudio();
+        uiState.selectedTeamPick = teamId;
+        renderStudentJoin();
+      }
+      window.pickStudentTeam = pickStudentTeam;
+
+      function studentJoinTeam() {
+        ensureAudio();
+        var nameInput = document.getElementById('student-name-input');
+        var fb = document.getElementById('student-join-feedback');
+        if (!nameInput || !fb) return;
+
+        var cleanName = nameInput.value.trim();
+        if (cleanName.length < 2) {
+          fb.textContent = `Masukkan nama lengkap Anda terlebih dahulu (minimal 2 huruf).`;
+          fb.className = `inline-feedback inline-feedback--error`;
+          fb.classList.remove('hidden');
+          return;
+        }
+        if (!uiState.selectedTeamPick) {
+          fb.textContent = `Pilih salah satu regu (Regu 1 sampai Regu 7) terlebih dahulu.`;
+          fb.className = `inline-feedback inline-feedback--error`;
+          fb.classList.remove('hidden');
+          return;
+        }
+        var currentMembers = getTeamMembers(uiState.selectedTeamPick);
+        if (currentMembers.length >= MAX_MEMBERS_PER_TEAM) {
+          fb.textContent = `Regu ini sudah penuh (maksimal 6 siswa). Silakan pilih regu lain.`;
+          fb.className = `inline-feedback inline-feedback--error`;
+          fb.classList.remove('hidden');
+          return;
+        }
+
+        fb.classList.add('hidden');
+        var newId = 'st_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6);
+        gameState.students[newId] = {
+          id: newId,
+          name: cleanName,
+          teamId: uiState.selectedTeamPick,
+          joinedAt: Date.now(),
+          currentQ: 1,
+          answers: {},
+          violations: 0
+        };
+        uiState.myStudentId = newId;
+        persistAndBroadcast();
+      }
+      window.studentJoinTeam = studentJoinTeam;
+
+      function studentLeaveTeam() {
+        if (uiState.myStudentId && gameState.students[uiState.myStudentId]) {
+          delete gameState.students[uiState.myStudentId];
+        }
+        uiState.myStudentId = null;
+        persistAndBroadcast();
+      }
+      window.studentLeaveTeam = studentLeaveTeam;
+
+      function submitStudentAnswer(qId, optionIdx) {
+        ensureAudio();
+        if (gameState.status !== 'running') return;
+        if (!uiState.myStudentId || !gameState.students[uiState.myStudentId]) return;
+
+        var st = gameState.students[uiState.myStudentId];
+        if (st.answers && st.answers[qId]) return; // already answered
+
+        var q = null;
+        for (var i = 0; i < QUESTIONS.length; i++) {
+          if (QUESTIONS[i].id === qId) { q = QUESTIONS[i]; break; }
+        }
+        if (!q) return;
+
+        var isCorrect = (optionIdx === q.correct);
+        if (!st.answers) st.answers = {};
+        st.answers[qId] = {
+          chosen: optionIdx,
+          correct: isCorrect,
+          points: isCorrect ? q.points : 0
+        };
+
+        // Advance to next unanswered question
+        var nextQ = QUESTIONS.length + 1;
+        for (var j = 0; j < QUESTIONS.length; j++) {
+          if (!st.answers[QUESTIONS[j].id]) {
+            nextQ = QUESTIONS[j].id;
+            break;
+          }
+        }
+        st.currentQ = nextQ;
+
+        var fb = document.getElementById('q-submit-feedback');
+        if (fb) {
+          fb.textContent = isCorrect
+            ? `Jawaban tersimpan! Kontribusi +` + q.points + ` poin untuk Regu ` + st.teamId + `.`
+            : `Jawaban tersimpan. Tetap semangat membantu Regu ` + st.teamId + ` pada soal berikutnya!`;
+          fb.className = isCorrect ? `inline-feedback inline-feedback--ok` : `inline-feedback`;
+          fb.classList.remove('hidden');
+        }
+
+        persistAndBroadcast();
+      }
+      window.submitStudentAnswer = submitStudentAnswer;
+
+      // --- OPERATOR ACTIONS ---
+      function operatorStartOrVerify() {
+        ensureAudio();
+        var input = document.getElementById('op-start-code');
+        var fb = document.getElementById('op-start-feedback');
+        if (!input || !fb) return;
+
+        var code = input.value.trim().toUpperCase();
+        if (code !== OPERATOR_CODE) {
+          fb.textContent = `Kode akses salah. Hanya Operator/Guru yang dapat memulai permainan.`;
+          fb.className = `inline-feedback inline-feedback--error`;
+          return;
+        }
+        uiState.operatorStartUnlocked = true;
+        input.value = '';
+        if (gameState.status === 'lobby') {
+          gameState.status = 'running';
+          fb.textContent = `Kode valid! Permainan telah DIMULAI untuk seluruh 7 regu.`;
+        } else {
+          fb.textContent = `Panel kontrol Operator terbuka.`;
+        }
+        fb.className = `inline-feedback inline-feedback--ok`;
+        persistAndBroadcast();
+      }
+      window.operatorStartOrVerify = operatorStartOrVerify;
+
+      function setGameStatus(nextStatus) {
+        if (!uiState.operatorStartUnlocked) return;
+        gameState.status = nextStatus;
+        var fb = document.getElementById('op-start-feedback');
+        if (fb) {
+          fb.textContent = nextStatus === 'running'
+            ? `Status diubah: Permainan SEDANG BERLANGSUNG.`
+            : `Status diubah: Sesi permainan SELESAI.`;
+          fb.className = `inline-feedback inline-feedback--ok`;
+        }
+        persistAndBroadcast();
+      }
+      window.setGameStatus = setGameStatus;
+
+      function handleOperatorReset(btn) {
+        if (!uiState.operatorStartUnlocked || !btn) return;
+        if (btn.dataset.armed !== 'true') {
+          btn.dataset.armed = 'true';
+          btn.textContent = `Klik Lagi untuk Konfirmasi Reset`;
+          setTimeout(function () {
+            if (btn && btn.dataset.armed === 'true') {
+              btn.dataset.armed = 'false';
+              btn.textContent = `Reset Semua Data`;
+            }
+          }, 4000);
+          return;
+        }
+        btn.dataset.armed = 'false';
+        btn.textContent = `Reset Semua Data`;
+        gameState = createInitialGameState();
+        gameState.resetNonce = Date.now();
+        uiState.myStudentId = null;
+        uiState.dismissedBannerId = null;
+        persistAndBroadcast();
+      }
+      window.handleOperatorReset = handleOperatorReset;
+
+      function selectTeamFilter(teamId) {
+        uiState.teamFilter = teamId;
+        renderOperatorView();
+      }
+      window.selectTeamFilter = selectTeamFilter;
+
+      function unlockSolutionsPanel() {
+        ensureAudio();
+        var input = document.getElementById('op-solution-code');
+        var fb = document.getElementById('op-solution-feedback');
+        if (!input || !fb) return;
+
+        var code = input.value.trim().toUpperCase();
+        if (code !== OPERATOR_CODE) {
+          fb.textContent = `Kode akses salah. Pembahasan, rekap skor, dan kunci jawaban tetap terkunci.`;
+          fb.className = `inline-feedback inline-feedback--error`;
+          fb.classList.remove('hidden');
+          return;
+        }
+        fb.classList.add('hidden');
+        input.value = '';
+        uiState.solutionsUnlocked = true;
+        renderOperatorSolutions();
+      }
+      window.unlockSolutionsPanel = unlockSolutionsPanel;
+
+      function lockSolutionsPanel() {
+        uiState.solutionsUnlocked = false;
+        renderOperatorSolutions();
+      }
+      window.lockSolutionsPanel = lockSolutionsPanel;
+
+      // Classroom Simulation Helper for Operator Testing
+      var SAMPLE_NAMES = [
+        `Alya`, `Bima`, `Citra`, `Dimas`, `Eka`, `Farah`,
+        `Galang`, `Hana`, `Ilham`, `Jihan`, `Kiki`, `Lutfi`,
+        `Mira`, `Naufal`, `Olivia`, `Putra`, `Qori`, `Raka`,
+        `Salsa`, `Tariq`, `Umar`, `Vina`, `Wahyu`, `Yuni`,
+        `Zaki`, `Adit`, `Bella`, `Candra`, `Dina`, `Fajar`,
+        `Gita`, `Hendra`, `Intan`, `Kevin`, `Laras`, `Rizky`
+      ];
+
+      function simulateClassroomJoin() {
+        if (!uiState.operatorStartUnlocked) return;
+        var currentCount = Object.keys(gameState.students).length;
+        var added = 0;
+        for (var t = 1; t <= 7 && added < 7; t++) {
+          var members = getTeamMembers(t);
+          if (members.length < 5) {
+            var nameIdx = (currentCount + added) % SAMPLE_NAMES.length;
+            var id = 'sim_' + Date.now() + '_' + t + '_' + added;
+            gameState.students[id] = {
+              id: id,
+              name: SAMPLE_NAMES[nameIdx] + ' (S' + (members.length + 1) + ')',
+              teamId: t,
+              joinedAt: Date.now() + added,
+              currentQ: 1,
+              answers: {},
+              violations: 0
+            };
+            added++;
+          }
+        }
+        persistAndBroadcast();
+      }
+      window.simulateClassroomJoin = simulateClassroomJoin;
+
+      function simulateClassroomActivity() {
+        if (!uiState.operatorStartUnlocked) return;
+        if (gameState.status !== 'running') gameState.status = 'running';
+        var ids = Object.keys(gameState.students);
+        if (ids.length === 0) {
+          simulateClassroomJoin();
+          ids = Object.keys(gameState.students);
+        }
+        for (var i = 0; i < ids.length; i++) {
+          var st = gameState.students[ids[i]];
+          for (var j = 0; j < QUESTIONS.length; j++) {
+            var q = QUESTIONS[j];
+            if (!st.answers[q.id]) {
+              var isRight = Math.random() > 0.28;
+              var chosen = isRight ? q.correct : ((q.correct + 1) % 4);
+              st.answers[q.id] = {
+                chosen: chosen,
+                correct: isRight,
+                points: isRight ? q.points : 0
+              };
+              st.currentQ = Math.min(QUESTIONS.length + 1, q.id + 1);
+              break;
+            }
+          }
+        }
+        persistAndBroadcast();
+      }
+      window.simulateClassroomActivity = simulateClassroomActivity;
+
+      function exportScoreCsv() {
+        var rows = ['Peringkat,Regu,Jumlah Anggota,Jawaban Benar,Poin Soal,Penalti Anti-Curang,Skor Akhir'];
+        var ranked = getRankedTeams();
+        for (var i = 0; i < ranked.length; i++) {
+          var r = ranked[i];
+          var def = TEAM_DEFS[r.teamId - 1];
+          rows.push([
+            i + 1,
+            '"' + def.name + ' (' + def.subtitle + ')"',
+            r.memberCount,
+            r.correctTotal,
+            r.earnedPoints,
+            '-' + r.penaltyPoints,
+            r.totalScore
+          ].join(','));
+        }
+        var csv = rows.join('\n');
+        if (window.notebookAppApi && typeof window.notebookAppApi.triggerFileDownload === 'function') {
+          window.notebookAppApi.triggerFileDownload({
+            content: csv,
+            contentType: 'text/csv',
+            encoding: 'UTF-8',
+            filename: 'rekap-skor-fisika-xi-usaha-energi.csv'
+          });
+        }
+      }
+      window.exportScoreCsv = exportScoreCsv;
+
+      function getRankedTeams() {
+        var list = [];
+        for (var i = 0; i < TEAM_DEFS.length; i++) {
+          list.push(getTeamStats(TEAM_DEFS[i].id));
+        }
+        list.sort(function (a, b) {
+          if (b.totalScore !== a.totalScore) return b.totalScore - a.totalScore;
+          return b.correctTotal - a.correctTotal;
+        });
+        return list;
+      }
+
+      // --- RENDERERS ---
+      function renderAll() {
+        renderHeaderControls();
+        renderGlobalBanner();
+        if (uiState.role === 'operator') {
+          var vo = document.getElementById('view-operator');
+          var vs = document.getElementById('view-student');
+          if (vo) vo.classList.remove('hidden');
+          if (vs) vs.classList.add('hidden');
+          renderOperatorView();
+        } else {
+          var vo2 = document.getElementById('view-operator');
+          var vs2 = document.getElementById('view-student');
+          if (vo2) vo2.classList.add('hidden');
+          if (vs2) vs2.classList.remove('hidden');
+          renderStudentView();
+        }
+      }
+
+      function renderHeaderControls() {
+        var btnSt = document.getElementById('btn-role-student');
+        var btnOp = document.getElementById('btn-role-operator');
+        if (btnSt && btnOp) {
+          btnSt.className = uiState.role === 'student' ? 'btn btn--active-role' : 'btn';
+          btnOp.className = uiState.role === 'operator' ? 'btn btn--active-role' : 'btn';
+        }
+        var badge = document.getElementById('sync-status-badge');
+        if (badge) {
+          var totalStudents = Object.keys(gameState.students).length;
+          badge.textContent = `SINKRON REAL-TIME · ` + totalStudents + ` SISWA AKTIF`;
+        }
+      }
+
+      function renderGlobalBanner() {
+        var banner = document.getElementById('global-cheat-banner');
+        var title = document.getElementById('cheat-banner-title');
+        var desc = document.getElementById('cheat-banner-desc');
+        if (!banner || !title || !desc) return;
+
+        var alert = gameState.lastAlert;
+        if (!alert || alert.id === uiState.dismissedBannerId) {
+          banner.classList.add('hidden');
+          return;
+        }
+        title.textContent = `PERINGATAN ANTI-CURANG (-` + alert.penalty + ` POIN)`;
+        desc.textContent = alert.studentName + ` (Regu ` + alert.teamId + `) terdeteksi ` + alert.reason.toLowerCase() + ` pada pukul ` + formatTime(alert.ts) + `.`;
+        banner.classList.remove('hidden');
+      }
+
+      function renderOperatorView() {
+        // Phase tag & KPIs
+        var phaseTag = document.getElementById('op-phase-tag');
+        if (phaseTag) {
+          if (gameState.status === 'lobby') phaseTag.textContent = `LOBBY · MENUNGGU KODE FISIKAXI`;
+          else if (gameState.status === 'running') phaseTag.textContent = `PERMAINAN BERLANGSUNG`;
+          else phaseTag.textContent = `SESI SELESAI`;
+        }
+
+        var liveCtrl = document.getElementById('op-live-controls');
+        if (liveCtrl) {
+          if (uiState.operatorStartUnlocked) liveCtrl.classList.remove('hidden');
+          else liveCtrl.classList.add('hidden');
+        }
+
+        var allIds = Object.keys(gameState.students);
+        var activeTeams = 0;
+        var totalAnswered = 0;
+        var totalViolations = 0;
+        for (var t = 1; t <= 7; t++) {
+          var ts = getTeamStats(t);
+          if (ts.memberCount > 0) activeTeams++;
+          totalAnswered += ts.answeredTotal;
+          totalViolations += ts.violationCount;
+        }
+        var kpiSt = document.getElementById('kpi-students');
+        var kpiTm = document.getElementById('kpi-teams');
+        var kpiAn = document.getElementById('kpi-answered');
+        var kpiVi = document.getElementById('kpi-violations');
+        if (kpiSt) kpiSt.textContent = allIds.length + ` / 42`;
+        if (kpiTm) kpiTm.textContent = activeTeams + ` / 7`;
+        if (kpiAn) kpiAn.textContent = String(totalAnswered);
+        if (kpiVi) kpiVi.textContent = String(totalViolations);
+
+        // 7 Teams Leaderboard
+        var teamsGrid = document.getElementById('op-teams-grid');
+        if (teamsGrid) {
+          var ranked = getRankedTeams();
+          var topScore = ranked.length > 0 ? ranked[0].totalScore : 0;
+          var html = '';
+          for (var i = 0; i < TEAM_DEFS.length; i++) {
+            var def = TEAM_DEFS[i];
+            var stat = getTeamStats(def.id);
+            var isSelected = uiState.teamFilter === def.id;
+            var isLeader = stat.totalScore > 0 && stat.totalScore === topScore;
+            var cardClass = 'team-card' + (isSelected ? ' team-card--selected' : '') + (isLeader ? ' team-card--leader' : '');
+
+            var chips = '';
+            if (stat.members.length === 0) {
+              chips = `<span style="font-size:0.85rem;color:var(--on-surface-variant);">Belum ada anggota bergabung</span>`;
+            } else {
+              for (var m = 0; m < stat.members.length; m++) {
+                var mem = stat.members[m];
+                var chipCls = mem.violations > 0 ? 'member-chip member-chip--flagged' : 'member-chip';
+                chips += `<span class="` + chipCls + `">` + escapeHtml(mem.name) + `</span>`;
+              }
+            }
+
+            html += `<button type="button" class="` + cardClass + `" onclick="selectTeamFilter(` + def.id + `)">
+              <div class="team-card__head">
+                <div>
+                  <div class="team-card__name">` + def.name + `</div>
+                  <div style="font-size:0.85rem;color:var(--on-surface-variant);font-weight:600;">` + def.subtitle + ` &middot; ` + stat.memberCount + `/6 siswa</div>
+                </div>
+                <div class="team-card__score">` + stat.totalScore + `</div>
+              </div>
+              <div class="team-bar-track"><div class="team-bar-fill" style="width:` + stat.progressPct + `%;"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:0.8125rem;font-weight:700;">
+                <span>Progres Regu: ` + stat.progressPct + `%</span>
+                <span style="color:` + (stat.penaltyPoints > 0 ? 'var(--error)' : 'var(--on-surface-variant)') + `;">Penalti: -` + stat.penaltyPoints + `</span>
+              </div>
+              <div class="team-members-chips">` + chips + `</div>
+            </button>`;
+          }
+          teamsGrid.innerHTML = html;
+        }
+
+        // Member Progress Matrix
+        var matrixGrid = document.getElementById('op-matrix-grid');
+        if (matrixGrid) {
+          var mHtml = '';
+          for (var j = 0; j < TEAM_DEFS.length; j++) {
+            var tDef = TEAM_DEFS[j];
+            if (uiState.teamFilter !== 0 && uiState.teamFilter !== tDef.id) continue;
+            var tStat = getTeamStats(tDef.id);
+
+            var rowsHtml = '';
+            if (tStat.members.length === 0) {
+              rowsHtml = `<div style="padding:var(--space-md);color:var(--on-surface-variant);font-size:0.9rem;border:1.5px dashed var(--outline);">Menunggu siswa masuk ke ` + tDef.name + `...</div>`;
+            } else {
+              for (var k = 0; k < tStat.members.length; k++) {
+                var s = tStat.members[k];
+                var sStat = getStudentStats(s);
+                var qDots = '';
+                for (var qIdx = 0; qIdx < QUESTIONS.length; qIdx++) {
+                  var qId = QUESTIONS[qIdx].id;
+                  var ans = s.answers && s.answers[qId];
+                  var cellCls = 'q-cell';
+                  if (ans) {
+                    cellCls += ans.correct ? ' q-cell--ok' : ' q-cell--wrong';
+                  } else if (gameState.status === 'running' && s.currentQ === qId) {
+                    cellCls += ' q-cell--curr';
+                  }
+                  qDots += `<div class="` + cellCls + `" title="Soal ` + qId + `">` + qId + `</div>`;
+                }
+                var violNote = s.violations > 0
+                  ? `<span style="color:var(--error);font-weight:700;"> &middot; ` + s.violations + `x curang</span>`
+                  : ``;
+                rowsHtml += `<div class="matrix-row">
+                  <div>
+                    <div style="font-weight:700;">` + escapeHtml(s.name) + violNote + `</div>
+                    <div style="font-size:0.8rem;color:var(--on-surface-variant);">Selesai ` + sStat.answered + `/10 &middot; Benar ` + sStat.correctCount + `</div>
+                    <div class="matrix-q-dots">` + qDots + `</div>
+                  </div>
+                  <div style="text-align:right;font-family:var(--font-mono);font-weight:700;font-size:1.1rem;">
+                    +` + sStat.earnedPoints + `
+                  </div>
+                </div>`;
+              }
+            }
+
+            mHtml += `<div class="matrix-team-box">
+              <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--outline);padding-bottom:var(--space-xs);">
+                <strong>` + tDef.name + ` &mdash; ` + tDef.subtitle + ` (` + tStat.memberCount + `/6)</strong>
+                <span style="font-family:var(--font-mono);font-weight:700;">Total: ` + tStat.totalScore + ` poin</span>
+              </div>
+              ` + rowsHtml + `
+            </div>`;
+          }
+          matrixGrid.innerHTML = mHtml;
+        }
+
+        renderOperatorSolutions();
+      }
+
+      function renderOperatorSolutions() {
+        var locked = document.getElementById('op-solutions-locked');
+        var unlocked = document.getElementById('op-solutions-unlocked');
+        if (!locked || !unlocked) return;
+
+        if (!uiState.solutionsUnlocked) {
+          locked.classList.remove('hidden');
+          unlocked.classList.add('hidden');
+          return;
+        }
+        locked.classList.add('hidden');
+        unlocked.classList.remove('hidden');
+
+        // Recap table
+        var tbody = document.getElementById('op-recap-tbody');
+        if (tbody) {
+          var ranked = getRankedTeams();
+          var rows = '';
+          for (var i = 0; i < ranked.length; i++) {
+            var r = ranked[i];
+            var def = TEAM_DEFS[r.teamId - 1];
+            rows += `<tr>
+              <td style="font-weight:700;">#` + (i + 1) + `</td>
+              <td><strong>` + def.name + `</strong> &middot; ` + def.subtitle + `</td>
+              <td class="num-col">` + r.memberCount + `</td>
+              <td class="num-col">` + r.correctTotal + `</td>
+              <td class="num-col">+` + r.earnedPoints + `</td>
+              <td class="num-col" style="color:` + (r.penaltyPoints > 0 ? 'var(--error)' : 'inherit') + `;">-` + r.penaltyPoints + `</td>
+              <td class="num-col" style="font-size:1.1rem;">` + r.totalScore + `</td>
+            </tr>`;
+          }
+          tbody.innerHTML = rows;
+        }
+
+        // Violations log
+        var vBody = document.getElementById('op-violations-tbody');
+        if (vBody) {
+          if (gameState.violationsLog.length === 0) {
+            vBody.innerHTML = `<tr><td colspan="5" style="color:var(--on-surface-variant);">Belum ada pelanggaran berpindah tab atau keluar browser yang terdeteksi.</td></tr>`;
+          } else {
+            var vRows = '';
+            for (var v = 0; v < gameState.violationsLog.length; v++) {
+              var item = gameState.violationsLog[v];
+              vRows += `<tr>
+                <td style="font-family:var(--font-mono);">` + formatTime(item.ts) + `</td>
+                <td style="font-weight:700;">` + escapeHtml(item.studentName) + `</td>
+                <td>Regu ` + item.teamId + `</td>
+                <td>` + escapeHtml(item.reason) + `</td>
+                <td class="num-col" style="color:var(--error);">-` + item.penalty + ` poin</td>
+              </tr>`;
+            }
+            vBody.innerHTML = vRows;
+          }
+        }
+
+        // Solutions list
+        var solList = document.getElementById('op-solutions-list');
+        if (solList) {
+          var sHtml = '';
+          var letters = ['A', 'B', 'C', 'D'];
+          for (var q = 0; q < QUESTIONS.length; q++) {
+            var qu = QUESTIONS[q];
+            var lvlClass = qu.level === 'Mudah' ? 'tag--mudah' : (qu.level === 'Sulit' ? 'tag--sulit' : 'tag--hots');
+            sHtml += `<article class="solution-card">
+              <div style="display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;margin-bottom:var(--space-sm);">
+                <span class="kicker">Soal ` + qu.id + `</span>
+                <span class="tag ` + lvlClass + `">` + qu.level + ` (+` + qu.points + ` poin)</span>
+                <span class="tag">` + qu.topic + `</span>
+              </div>
+              <div class="question-layout">
+                <div>
+                  <p style="font-weight:600;margin-top:0;">` + qu.prompt + `</p>
+                  <div style="font-weight:700;color:var(--positive);margin-top:var(--space-sm);">
+                    Kunci Jawaban: ` + letters[qu.correct] + `. ` + qu.options[qu.correct] + `
+                  </div>
+                  <div class="formula-box">` + qu.formula + `</div>
+                </div>
+                <div class="diagram-frame">` + qu.svg + `</div>
+              </div>
+            </article>`;
+          }
+          solList.innerHTML = sHtml;
+        }
+      }
+
+      function renderStudentView() {
+        var cheatOverlay = document.getElementById('student-cheat-overlay');
+        var joinPanel = document.getElementById('student-join-panel');
+        var lobbyPanel = document.getElementById('student-lobby-panel');
+        var quizPanel = document.getElementById('student-quiz-panel');
+        var donePanel = document.getElementById('student-done-panel');
+
+        if (cheatOverlay) {
+          if (uiState.cheatOverlayVisible) cheatOverlay.classList.remove('hidden');
+          else cheatOverlay.classList.add('hidden');
+        }
+
+        var me = uiState.myStudentId ? gameState.students[uiState.myStudentId] : null;
+        if (!me) {
+          if (joinPanel) joinPanel.classList.remove('hidden');
+          if (lobbyPanel) lobbyPanel.classList.add('hidden');
+          if (quizPanel) quizPanel.classList.add('hidden');
+          if (donePanel) donePanel.classList.add('hidden');
+          renderStudentJoin();
+          return;
+        }
+
+        if (joinPanel) joinPanel.classList.add('hidden');
+
+        if (gameState.status === 'lobby') {
+          if (lobbyPanel) lobbyPanel.classList.remove('hidden');
+          if (quizPanel) quizPanel.classList.add('hidden');
+          if (donePanel) donePanel.classList.add('hidden');
+          renderStudentLobby(me);
+          return;
+        }
+
+        var myStats = getStudentStats(me);
+        if (gameState.status === 'finished' || myStats.finished) {
+          if (lobbyPanel) lobbyPanel.classList.add('hidden');
+          if (quizPanel) quizPanel.classList.add('hidden');
+          if (donePanel) donePanel.classList.remove('hidden');
+          renderStudentDone(me, myStats);
+          return;
+        }
+
+        if (lobbyPanel) lobbyPanel.classList.add('hidden');
+        if (quizPanel) quizPanel.classList.remove('hidden');
+        if (donePanel) donePanel.classList.add('hidden');
+        renderStudentQuiz(me, myStats);
+      }
+
+      function renderStudentJoin() {
+        var picker = document.getElementById('student-team-picker');
+        if (!picker) return;
+        var html = '';
+        for (var i = 0; i < TEAM_DEFS.length; i++) {
+          var def = TEAM_DEFS[i];
+          var members = getTeamMembers(def.id);
+          var isFull = members.length >= MAX_MEMBERS_PER_TEAM;
+          var isSelected = uiState.selectedTeamPick === def.id;
+          var cls = 'team-pick-btn' + (isSelected ? ' team-pick-btn--selected' : '');
+          html += `<button type="button" class="` + cls + `" ` + (isFull ? 'disabled' : '') + ` onclick="pickStudentTeam(` + def.id + `)">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <strong style="font-family:var(--font-headline);font-size:1.1rem;">` + def.name + `</strong>
+              <span class="tag">` + members.length + `/6</span>
+            </div>
+            <div style="font-size:0.85rem;color:var(--on-surface-variant);font-weight:600;">` + def.subtitle + (isFull ? ' (Penuh)' : '') + `</div>
+          </button>`;
+        }
+        picker.innerHTML = html;
+      }
+
+      function renderStudentLobby(me) {
+        var def = TEAM_DEFS[me.teamId - 1];
+        var badge = document.getElementById('lobby-team-badge');
+        var greet = document.getElementById('lobby-greeting');
+        var list = document.getElementById('lobby-teammates-list');
+        if (badge) badge.textContent = def.name.toUpperCase() + ` · ` + def.subtitle.toUpperCase();
+        if (greet) greet.textContent = `Halo, ` + me.name + `!`;
+        if (list) {
+          var members = getTeamMembers(me.teamId);
+          var html = '';
+          for (var i = 0; i < members.length; i++) {
+            var isMe = members[i].id === me.id;
+            html += `<span class="member-chip" style="background-color:` + (isMe ? 'var(--primary-container)' : 'var(--background)') + `;">` +
+              escapeHtml(members[i].name) + (isMe ? ` (Anda)` : ``) + `</span>`;
+          }
+          list.innerHTML = html;
+        }
+      }
+
+      function renderTeammatesProgressHtml(me) {
+        var members = getTeamMembers(me.teamId);
+        var html = '';
+        for (var i = 0; i < members.length; i++) {
+          var m = members[i];
+          var ms = getStudentStats(m);
+          var pct = Math.round((ms.answered / QUESTIONS.length) * 100);
+          html += `<div style="display:grid;grid-template-columns:minmax(0,1fr) 90px;gap:var(--space-sm);align-items:center;">
+            <div style="font-size:0.875rem;font-weight:700;">` + escapeHtml(m.name) + (m.id === me.id ? ` (Anda)` : ``) + ` &mdash; ` + ms.answered + `/10 soal</div>
+            <div class="team-bar-track"><div class="team-bar-fill" style="width:` + pct + `%;"></div></div>
+          </div>`;
+        }
+        return html;
+      }
+
+      function renderStudentQuiz(me, myStats) {
+        var def = TEAM_DEFS[me.teamId - 1];
+        var teamStats = getTeamStats(me.teamId);
+        var meta = document.getElementById('quiz-student-meta');
+        var scoreEl = document.getElementById('quiz-team-score-live');
+        var progEl = document.getElementById('quiz-progress-label');
+        var matesEl = document.getElementById('quiz-teammates-progress');
+
+        if (meta) meta.textContent = me.name.toUpperCase() + ` · ` + def.name.toUpperCase();
+        if (scoreEl) scoreEl.textContent = `Skor ` + def.name + `: ` + teamStats.totalScore + ` poin`;
+        if (progEl) progEl.textContent = `Soal ` + Math.min(QUESTIONS.length, myStats.answered + 1) + ` / ` + QUESTIONS.length;
+        if (matesEl) matesEl.innerHTML = renderTeammatesProgressHtml(me);
+
+        // Current unanswered question
+        var activeQ = QUESTIONS[0];
+        for (var i = 0; i < QUESTIONS.length; i++) {
+          if (!me.answers || !me.answers[QUESTIONS[i].id]) {
+            activeQ = QUESTIONS[i];
+            break;
+          }
+        }
+
+        var lvlTag = document.getElementById('q-level-tag');
+        var topTag = document.getElementById('q-topic-tag');
+        var promptEl = document.getElementById('q-prompt-text');
+        var diagEl = document.getElementById('q-diagram-box');
+        var optsEl = document.getElementById('q-options-list');
+
+        if (lvlTag) {
+          lvlTag.textContent = activeQ.level.toUpperCase() + ` (+` + activeQ.points + ` POIN)`;
+          lvlTag.className = 'tag ' + (activeQ.level === 'Mudah' ? 'tag--mudah' : (activeQ.level === 'Sulit' ? 'tag--sulit' : 'tag--hots'));
+        }
+        if (topTag) topTag.textContent = activeQ.topic;
+        if (promptEl) promptEl.textContent = activeQ.id + `. ` + activeQ.prompt;
+        if (diagEl) diagEl.innerHTML = activeQ.svg;
+
+        if (optsEl) {
+          var letters = ['A', 'B', 'C', 'D'];
+          var oHtml = '';
+          for (var j = 0; j < activeQ.options.length; j++) {
+            oHtml += `<button type="button" class="option-btn" onclick="submitStudentAnswer(` + activeQ.id + `, ` + j + `)">
+              <span class="option-key">` + letters[j] + `</span>
+              <span>` + activeQ.options[j] + `</span>
+            </button>`;
+          }
+          optsEl.innerHTML = oHtml;
+        }
+      }
+
+      function renderStudentDone(me, myStats) {
+        var teamStats = getTeamStats(me.teamId);
+        var summary = document.getElementById('done-summary-text');
+        var matesEl = document.getElementById('done-teammates-progress');
+        if (summary) {
+          summary.textContent = `Kontribusi Anda: ` + myStats.correctCount + ` benar (+` + myStats.earnedPoints + ` poin). Total skor Regu ` + me.teamId + ` saat ini: ` + teamStats.totalScore + ` poin.`;
+        }
+        if (matesEl) {
+          matesEl.innerHTML = renderTeammatesProgressHtml(me);
+        }
+      }
+
+      // --- BOOTSTRAP ---
+      async function bootstrap() {
+        initSync();
+        setupAntiCheatListeners();
+        await loadPersistedState();
+        renderAll();
+        startPollSync();
+        if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === 'function') {
+          window.notebookAppApi.notifyAppReady();
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bootstrap);
+      } else {
+        bootstrap();
+      }
+  </script>
+</body>
+</html>
